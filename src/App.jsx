@@ -1,6 +1,8 @@
 import Hero from './components/Hero'
 import Chat from './components/Chat'
 import Features from './components/Features'
+import SceneSwitcher from './components/SceneSwitcher'
+import AudioAmbience from './components/AudioAmbience'
 
 function App() {
   return (
@@ -44,6 +46,7 @@ function App() {
 
       <main className="relative z-10 pb-24">
         <Hero />
+        <SceneSwitcher />
         <Chat />
         <Features />
       </main>
@@ -51,6 +54,8 @@ function App() {
       <footer className="relative z-10 py-10 text-center text-sky-100/80 text-sm">
         With devotion to Sri Krishna. May these words inspire remembrance and service.
       </footer>
+
+      <AudioAmbience />
     </div>
   )
 }

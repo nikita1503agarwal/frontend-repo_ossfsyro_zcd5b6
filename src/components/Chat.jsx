@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import SafeImage from './SafeImage'
 
 const backend = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'
 
@@ -88,7 +89,7 @@ function Chat() {
                   className={`flex gap-4 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}
                 >
                   <div className={`w-11 h-11 rounded-full shrink-0 ring-2 ${m.role === 'user' ? 'ring-rose-300' : 'ring-sky-300'} overflow-hidden`}> 
-                    <img
+                    <SafeImage
                       src={m.role === 'user' ? 'https://i.pravatar.cc/100?img=12' : 'https://upload.wikimedia.org/wikipedia/commons/1/17/Krishna_with_flute.jpg'}
                       alt={m.role}
                       className="w-full h-full object-cover"
@@ -96,13 +97,13 @@ function Chat() {
                   </div>
                   <div className={`max-w-xl ${m.role === 'user' ? 'text-right' : 'text-left'}`}>
                     {m.image_url && (
-                      <motion.img
-                        initial={{ opacity: 0, scale: 0.98 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        src={m.image_url}
-                        alt="illustration"
-                        className="rounded-lg mb-2 shadow-lg shadow-sky-900/40 border border-white/20"
-                      />
+                      <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
+                        <SafeImage
+                          src={m.image_url}
+                          alt="illustration"
+                          className="rounded-lg mb-2 shadow-lg shadow-sky-900/40 border border-white/20"
+                        />
+                      </motion.div>
                     )}
                     <div className={`inline-block px-4 py-3 rounded-2xl text-sky-50 relative overflow-hidden ${
                       m.role === 'user'

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import SafeImage from './SafeImage'
 
 function Hero() {
   return (
@@ -25,15 +26,18 @@ function Hero() {
 
         {/* chariot scene with parallax */}
         <div className="mt-10 grid lg:grid-cols-2 items-center gap-8">
-          <motion.img
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Krishna_and_Arjuna_in_chariot.jpg"
-            alt="Sri Krishna guiding Arjuna on the chariot"
-            className="w-full h-64 sm:h-80 object-cover rounded-2xl ring-4 ring-white/20 shadow-xl shadow-sky-900/40"
-          />
+          >
+            <SafeImage
+              src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Krishna_and_Arjuna_in_chariot.jpg"
+              alt="Sri Krishna guiding Arjuna on the chariot"
+              className="w-full h-64 sm:h-80 object-cover rounded-2xl ring-4 ring-white/20 shadow-xl shadow-sky-900/40"
+            />
+          </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -46,17 +50,17 @@ function Hero() {
             </p>
             <div className="mt-4 grid grid-cols-3 gap-3">
               {[
-                "https://upload.wikimedia.org/wikipedia/commons/4/4d/Krishna_and_Arjuna.jpg",
-                "https://upload.wikimedia.org/wikipedia/commons/1/17/Krishna_with_flute.jpg",
-                "https://upload.wikimedia.org/wikipedia/commons/4/42/Krishna_with_Arjuna.jpg",
+                'https://upload.wikimedia.org/wikipedia/commons/4/4d/Krishna_and_Arjuna.jpg',
+                'https://upload.wikimedia.org/wikipedia/commons/1/17/Krishna_with_flute.jpg',
+                'https://upload.wikimedia.org/wikipedia/commons/4/42/Krishna_with_Arjuna.jpg',
               ].map((src, i) => (
-                <motion.img
-                  key={i}
-                  whileHover={{ scale: 1.05 }}
-                  src={src}
-                  alt="Krishna and Arjuna"
-                  className="h-24 sm:h-28 w-full object-cover rounded-xl ring-2 ring-white/20 shadow-lg shadow-sky-900/40"
-                />
+                <motion.div key={i} whileHover={{ scale: 1.05 }}>
+                  <SafeImage
+                    src={src}
+                    alt="Krishna and Arjuna"
+                    className="h-24 sm:h-28 w-full object-cover rounded-xl ring-2 ring-white/20 shadow-lg shadow-sky-900/40"
+                  />
+                </motion.div>
               ))}
             </div>
           </motion.div>
