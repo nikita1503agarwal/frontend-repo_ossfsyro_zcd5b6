@@ -1,8 +1,21 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 // A resilient image that avoids hotlink/referrer issues and shows a graceful fallback
-export default function SafeImage({ src, alt = '', className = '', loading = 'lazy' }) {
+export default function SafeImage({ src, alt = '', className = '', loading = 'lazy', proxy = true }) {
   const [source, setSource] = useState(src)
+  const backend = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'
+
+  const computedSrc = useMemo(() => {
+    if (!source) return ''
+    // If proxy enabled and src is external http(s), route through backend to avoid CORS/referrer blocks
+    const isExternal = typeof source === 'string' && /^(https?:)?\/\//i.test(source)
+    if (proxy && isExternal) {
+      // ensure absolute URL (add https if protocol-relative)
+      const absolute = source.startsWith('http') ? source : `https:${source}`
+      return `${backend}/api/proxy-image?url=${encodeURIComponent(absolute)}`
+    }
+    return source
+  }, [source, backend, proxy])
 
   const fallback =
     'data:image/svg+xml;utf8,' +
@@ -28,7 +41,7 @@ export default function SafeImage({ src, alt = '', className = '', loading = 'la
 
   return (
     <img
-      src={source}
+      src={computedSrc}
       alt={alt}
       className={className}
       loading={loading}
